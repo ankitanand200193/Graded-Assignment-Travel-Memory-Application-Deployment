@@ -54,7 +54,7 @@ MONGO_URI=your_mongodb_connection_string
 ```bash
 node index.js
 ```
-![backend view](Backend view.png)
+![backend view](Backend%20view.png)
 
 #### 🌐 NGINX Reverse Proxy
 Edit `/etc/nginx/sites-available/default`:
