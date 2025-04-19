@@ -50,10 +50,11 @@ PORT=3001
 MONGO_URI=your_mongodb_connection_string
 ```
 
-#### 🂀 Run the backed
+#### 🂀 Run the backend
 ```bash
 node index.js
 ```
+![backend view](Backend view.png)
 
 #### 🌐 NGINX Reverse Proxy
 Edit `/etc/nginx/sites-available/default`:
@@ -72,6 +73,8 @@ server {
     }
 }
 ```
+![backend nginx](Backend nginx.png)
+
 
 Restart NGINX:
 ```bash
@@ -86,6 +89,10 @@ Create another 2 instances from the successfully created backend AMI to scale an
 #### Attaching custom domain to the backend ALB DNS
 
 Once all the 3 backend servers are deployed and attached to the ALB via target group, attach the custom domain `backend.ankitanand.sbs` to the backend DNS.
+
+#### ALB backend
+
+![backend alb](alb_backend.png)
 
 Note: The target group might show unhealthy however the ALB will run. To make them healthy in target group do add the path /trip in the health check tab.
 
