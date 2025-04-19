@@ -54,8 +54,6 @@ MONGO_URI=your_mongodb_connection_string
 ```bash
 node index.js
 ```
-![backend view](Backend%20view.png)
-
 #### 🌐 NGINX Reverse Proxy
 Edit `/etc/nginx/sites-available/default`:
 ```nginx
@@ -73,7 +71,7 @@ server {
     }
 }
 ```
-![backend nginx](Backend nginx.png)
+![backend nginx](Backend%20nginx.png)
 
 
 Restart NGINX:
@@ -94,6 +92,10 @@ Once all the 3 backend servers are deployed and attached to the ALB via target g
 
 ![backend alb](alb_backend.png)
 
+#### Target Group
+
+![targetgroup_backend](target_group_backend.png)
+
 Note: The target group might show unhealthy however the ALB will run. To make them healthy in target group do add the path /trip in the health check tab.
 
 #### Important
@@ -104,8 +106,7 @@ Note: The target group might show unhealthy however the ALB will run. To make th
 
 #### Result:
 
-Backend view screenshot.
-
+![backend view](Backend%20view.png)
 
 ### 2. 🖼️ Frontend Configuration & Backend Connection
 
@@ -124,55 +125,71 @@ sudo apt install npm
 npm install
 ```
 
+#### 🛠️ Setup `.env` file
+REACT_APP_BACKEND_URL=http://backend.ankitanand.sbs
+
+
 #### 🔗 Update `urls.js`
 Edit `src/api/urls.js` to point to your backend:
-```javascript
-// src/api/urls.js
-const BASE_URL = "http://your-domain.com/api";
-export default BASE_URL;
+```
+export const baseUrl = process.env.REACT_APP_BACKEND_URL || "http://backend.ankitanand.sbs"
 ```
 
-#### 🛠️ Build and Serve Frontend
+#### 🛠️ Build Frontend
 ```bash
 npm run build
-npm install -g serve
-serve -s build -l 80
 ```
 
-*Or use NGINX to serve the frontend:*
+#### NGINX to serve the frontend:*
 ```nginx
 server {
     listen 80;
-    root /path-to-frontend/build;
-    index index.html index.htm;
+    root /home/ubuntu/TravelMemory/frontend/build;
+    index index.html;
 
     location / {
         try_files $uri /index.html;
     }
 }
 ```
+![frontend_nginx](Frontend%20nginx.png)
 
----
+#### Attaching custom domain to the backend ALB DNS
+
+Once all the frontend servers are deployed and attached to the ALB via target group, attach the custom domain `ankitanand.sbs` to the frontend DNS.
+
+#### ALB backend
+
+![frontend alb](alb_frontend.png)
+
+#### Target Group
+
+![targetgroup_frontend](target_group_Frontend.png)
+
+### Result 
+
+#### Frontend view
+
+![Frontend](Frontend%20view.png)
+
+#### Add Experience tab 
+
+![add_experience](addexperience_Frontend.png)
 
 
+### Custom domain Namecheap dashboard
+
+![namecheap](Namecheap_dashboard.png)
 
 ## 📸 Final Deployment Checklist
 
-- ✅ Backend running on EC2 with PM2 and NGINX.
-- ✅ Frontend served via NGINX or `serve`.
+- ✅ Backend running on EC2.
+- ✅ Frontend served via NGINX
 - ✅ Communication wired via `urls.js`.
 - ✅ Load balancing configured with ALB.
-- ✅ Domain connected through Cloudflare DNS.
+- ✅ Domain connected through Namecheap DNS.
 
 ---
 
-## 🙌 Contributing
 
-Feel free to fork the repo, raise issues, or create PRs to enhance the deployment or add features.
-
----
-
-## 📜 License
-
-MIT License © [UnpredictablePrashant](https://github.com/UnpredictablePrashant)
 
