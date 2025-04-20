@@ -19,7 +19,7 @@ The **TravelMemory** application enables users to create and share travel memori
 - Configure the React frontend.
 - Enable frontend-backend communication.
 - Scale using multiple EC2 instances and load balancer.
-- Connect a custom domain with Cloudflare.
+- Connect a custom domain.
 
 ---
 
@@ -190,6 +190,11 @@ Once all the frontend servers are deployed and attached to the ALB via target gr
 - ✅ Domain connected through Namecheap DNS.
 
 ---
+
+
+## MERN Application Architecture Diagram
+
+![Mern app](Mern_App_architecture.png)
 
 
 
