@@ -126,8 +126,9 @@ npm install
 ```
 
 #### 🛠️ Setup `.env` file
+```
 REACT_APP_BACKEND_URL=http://backend.ankitanand.sbs
-
+```
 
 #### 🔗 Update `urls.js`
 Edit `src/api/urls.js` to point to your backend:
